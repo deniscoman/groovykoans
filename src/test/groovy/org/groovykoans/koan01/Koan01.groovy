@@ -34,6 +34,9 @@ class Koan01 extends GroovyTestCase {
         // Assign our variables the required values to continue...
         // ------------ START EDITING HERE ----------------------
 
+        assertion = true
+        hello = "Hello"
+
 
         // ------------ STOP EDITING HERE  ----------------------
 
@@ -55,7 +58,7 @@ class Koan01 extends GroovyTestCase {
         // Create the target string with the ${} mechanism. Remember that ${} can contain method calls too!
         String result
         // ------------ START EDITING HERE ----------------------
-
+        result = "The size of the string '${greeting}' is ${greeting.length()}"
 
         // ------------ STOP EDITING HERE  ----------------------
 
@@ -71,6 +74,7 @@ class Koan01 extends GroovyTestCase {
         def result
         // ------------ START EDITING HERE ----------------------
 
+        result = map.right.concat(map.left)
 
         // ------------ STOP EDITING HERE  ----------------------
 
@@ -92,7 +96,7 @@ class Koan01 extends GroovyTestCase {
         // Add the missing item to the Groovy list. Pay attention to the order of the items.
         // Hint: you can use either Java's add(int, String) or Groovy's plus() method.
         // ------------ START EDITING HERE ----------------------
-
+        groovyList.add(1,'Queen')
 
         // ------------ STOP EDITING HERE  ----------------------
 
@@ -135,6 +139,15 @@ class Koan01 extends GroovyTestCase {
         def message
         // ------------ START EDITING HERE ----------------------
 
+        /*if(userService.loggedInUser)
+            message ='Hello Ronaldo!'
+        else
+            message ='Hello Anonymous!'*/
+
+        def firstname = userService?.loggedInUser?.firstName ?: 'Anonymous'
+        message = "Hello ${firstname}!"
+
+        
 
         // ------------ STOP EDITING HERE  ----------------------
 
