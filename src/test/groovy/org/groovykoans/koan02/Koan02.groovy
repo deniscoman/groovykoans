@@ -21,6 +21,8 @@ class Koan02 extends GroovyTestCase {
 
         // ------------ START EDITING HERE ----------------------
 
+        predicate1 = true
+        predicate2 = false
 
         // ------------ STOP EDITING HERE  ----------------------
 
@@ -34,6 +36,10 @@ class Koan02 extends GroovyTestCase {
         List<String> list = ['item']
 
         // ------------ START EDITING HERE ----------------------
+
+        map = [firstName:'Coman']
+        list.remove(0)
+
 
 
         // ------------ STOP EDITING HERE  ----------------------
@@ -49,6 +55,8 @@ class Koan02 extends GroovyTestCase {
 
         // ------------ START EDITING HERE ----------------------
 
+        s1= ''
+        s2= 'Non-empty string'
 
         // ------------ STOP EDITING HERE  ----------------------
 
@@ -67,16 +75,17 @@ class Koan02 extends GroovyTestCase {
         // ------------ START EDITING HERE ----------------------
 
 
+        balance.remove(3)
+
         // ------------ STOP EDITING HERE  ----------------------
 
         // Iterate through the list and AND the boolean values of its members.
         // For an easier way to do this in Groovy, check out the any() method at
         // http://docs.groovy-lang.org/latest/html/groovy-jdk/java/lang/Object.html#any(groovy.lang.Closure)
-        def result = true
-        for (int i : balance) {
-            result = result && i.asBoolean()
-        }
-        assert result
+        //for (int i : balance) {
+        //     result = result && i.asBoolean()
+        //}
+        assert balance.any()
     }
 
 }
