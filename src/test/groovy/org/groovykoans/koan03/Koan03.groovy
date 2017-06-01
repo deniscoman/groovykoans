@@ -7,6 +7,8 @@
 
 package org.groovykoans.koan03
 
+import org.apache.tools.ant.taskdefs.Java
+
 /**
  * Koan03 - GroovyBeans and classes
  *
@@ -31,6 +33,8 @@ class Koan03 extends GroovyTestCase {
         def groovyFirstName
         // ------------ START EDITING HERE ----------------------
 
+        javaFirstName= javaPerson.getFirstName()
+        groovyFirstName=groovyPerson.firstName
 
         // ------------ STOP EDITING HERE  ----------------------
 
@@ -47,7 +51,7 @@ class Koan03 extends GroovyTestCase {
         def failed = true
         shouldFail (ReadOnlyPropertyException) {
             // ------------ START EDITING HERE ----------------------
-
+            person.ssn = '2345'
 
             // ------------ STOP EDITING HERE  ----------------------
             failed = false
@@ -71,6 +75,7 @@ class Koan03 extends GroovyTestCase {
         def transaction
         // ------------ START EDITING HERE ----------------------
 
+        transaction = new SimpleGroovyBean(title: 'Transaction', data: -30)
 
         // ------------ STOP EDITING HERE  ----------------------
 
