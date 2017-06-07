@@ -7,6 +7,7 @@
 
 package org.groovykoans.koan07
 
+import java.sql.Array
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -31,10 +32,12 @@ class Koan07 extends GroovyTestCase {
         def technologies = ['Grails', 'Gradle', '.NET', 'Python', 'Groovy']
         def regexp
         // ------------ START EDITING HERE ----------------------
-
+        regexp = /G\S+(s|e)$/
 
         // ------------ STOP EDITING HERE  ----------------------
         def result = technologies.findAll { it ==~ regexp }
+
+        println result
 
         assert result == ['Grails', 'Gradle']
     }
@@ -52,6 +55,9 @@ class Koan07 extends GroovyTestCase {
         String groovyString
         // ------------ START EDITING HERE ----------------------
 
+        groovyString= """In Java a multiline string
+requires using special signs such as ${signs}
+and can become difficult to maintain"""
 
         // ------------ STOP EDITING HERE  ----------------------
         assert groovyString == javaString
@@ -81,6 +87,7 @@ class Koan07 extends GroovyTestCase {
         def groovyRegExp
         // ------------ START EDITING HERE ----------------------
 
+        groovyRegExp = /(?sm)(.*?)\s+(\d+)\s+(\d+)/
 
         // ------------ STOP EDITING HERE  ----------------------
         def matcher = text =~ groovyRegExp

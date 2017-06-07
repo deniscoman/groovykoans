@@ -29,6 +29,14 @@ class Koan08 extends GroovyTestCase {
         def magicClosure = { input ->
             // ------------ START EDITING HERE ----------------------
 
+            switch (input){
+
+                case 1..100:
+                    input= input/2
+                    break
+                case ~/.*ee/:
+                    input
+            }
 
             // ------------ STOP EDITING HERE  ----------------------
         }

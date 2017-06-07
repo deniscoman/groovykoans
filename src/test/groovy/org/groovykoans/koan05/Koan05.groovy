@@ -42,6 +42,7 @@ class Koan05 extends GroovyTestCase {
         def idListResult = []
         // ------------ START EDITING HERE ----------------------
 
+        idToNameMap.each {key, value -> idListResult.add("$key$value")}
 
         // ------------ STOP EDITING HERE  ----------------------
         assert idListResult == ['333Matthew', '233Christopher', '133Dominic']
@@ -58,10 +59,12 @@ class Koan05 extends GroovyTestCase {
         def expectedRange = []
         // ------------ START EDITING HERE ----------------------
 
+        expectedRange = [5,6,7,8,9,10]
 
         // ------------ STOP EDITING HERE  ----------------------
         assert range == expectedRange
     }
+
 
     void test03_IterateOnRanges() {
         // Just as you can iterate over lists, you can iterate over ranges.
@@ -70,6 +73,13 @@ class Koan05 extends GroovyTestCase {
         // http://docs.groovy-lang.org/latest/html/groovy-jdk/java/lang/Object.html#eachWithIndex(groovy.lang.Closure)
         def rangeResult = []
         // ------------ START EDITING HERE ----------------------
+
+        def range = 'a'..'z'
+
+
+        //range.each {key , value ->   }
+        range.eachWithIndex{  entry,  i -> if(i%2==0){rangeResult.add(entry)} } // ??
+
 
 
         // ------------ STOP EDITING HERE  ----------------------
