@@ -32,7 +32,7 @@ class Koan07 extends GroovyTestCase {
         def technologies = ['Grails', 'Gradle', '.NET', 'Python', 'Groovy']
         def regexp
         // ------------ START EDITING HERE ----------------------
-        regexp = /G\S+(s|e)$/
+        regexp = /^G\S+[se]$/
 
         // ------------ STOP EDITING HERE  ----------------------
         def result = technologies.findAll { it ==~ regexp }
@@ -112,6 +112,7 @@ and can become difficult to maintain"""
         def patternInGroovy
         // ------------ START EDITING HERE ----------------------
 
+        patternInGroovy = ~ /\d{3}([,\s])?\d{4}/
 
         // ------------ STOP EDITING HERE  ----------------------
         assert patternInGroovy instanceof Pattern
@@ -123,6 +124,9 @@ and can become difficult to maintain"""
         def firstNamesList = []
         // ------------ START EDITING HERE ----------------------
 
+        Matcher  first  = names =~ /([a-zA-Z]+) (?:([a-zA-Z]+))[^,]*/
+
+        first.each {x -> firstNamesList.add(x[1])}
 
         // ------------ STOP EDITING HERE  ----------------------
         assert firstNamesList == ['John', 'Paul', 'George', 'Ringo']
@@ -133,6 +137,8 @@ and can become difficult to maintain"""
         boolean isNumberValid = false
         // ------------ START EDITING HERE ----------------------
 
+        if(number ==~ /^4[0-9]{12}(?:[0-9]{3})?$/)
+            isNumberValid =true
 
         // ------------ STOP EDITING HERE  ----------------------
         assert isNumberValid, 'Visa number should be valid!'
@@ -152,6 +158,26 @@ and can become difficult to maintain"""
                       |In the land of submarines'''.stripMargin()
         def result
         // ------------ START EDITING HERE ----------------------
+
+
+        //song.eachMatch(/(town)/) {town-> }
+
+        //song.each {it.toString()=='town' ? result.concat('town') : result.concat(it) }
+
+        //song.stripMargin().replaceAll(/(town)/, 'ciudad')
+
+        //println song.stripMargin()
+
+        //println result
+
+        def  patern = /(town)/
+
+        result=song.replaceAll(/(town)/ , 'ciudad')
+        result=result.replaceAll(/(man)/ , 'hombre')
+        result=result.replaceAll(/(life)/ , 'vida')
+
+
+
 
 
         // ------------ STOP EDITING HERE  ----------------------
@@ -179,13 +205,18 @@ and can become difficult to maintain"""
         String regexp
         // ------------ START EDITING HERE ----------------------
 
+        regexp = /(?ix)#comentariu
+                   ([a-zA-Z]+\s+)([0-9]+\s+)([0-9]*)/
 
         // ------------ STOP EDITING HERE  ----------------------
         def sum = text.findAll(regexp) { it[3].toInteger() }.sum()
         // ^^ This is even more concise than the previous example! Choose the one you feel most comfortable with.
 
+
         assert sum == 1015
         def options = regexp.find(/\(\?[^\)]*\)/)
+
+
         assert options.contains('x'), 'A commented regex must use the x flag'
         assert regexp.contains('#'), 'Comments can be inserted using the # character'
     }

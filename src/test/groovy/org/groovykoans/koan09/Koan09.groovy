@@ -7,6 +7,8 @@
 
 package org.groovykoans.koan09
 
+import org.omg.PortableInterceptor.Interceptor
+
 /**
  * Koan09 - Meta-programming (Meta Object Protocol)
  *
@@ -32,6 +34,12 @@ class Koan09 extends GroovyTestCase {
         def expando = new Expando()
         // ------------ START EDITING HERE ----------------------
 
+        expando.firstName = 'Denis'
+        expando.sayHello = { a ->
+
+            "Hello from ${expando.firstName}"
+
+        }
 
         // ------------ STOP EDITING HERE  ----------------------
 
@@ -48,6 +56,13 @@ class Koan09 extends GroovyTestCase {
         // Using the NukeInterceptor, make sure that only admin is allowed to run this service.
         def proxy
         // ------------ START EDITING HERE ----------------------
+
+
+        proxy= ProxyMetaClass.getInstance(SensitiveService)
+        def interceptor = new NukeInterceptor()
+        proxy.interceptor = interceptor
+
+
 
 
         // ------------ STOP EDITING HERE  ----------------------
@@ -70,6 +85,7 @@ class Koan09 extends GroovyTestCase {
         def expectedThisClassName
         // ------------ START EDITING HERE ----------------------
 
+        expectedThisClassName =  this.class.name
 
         // ------------ STOP EDITING HERE  ----------------------
         assert this.class.name == expectedThisClassName
@@ -99,15 +115,20 @@ class Koan09 extends GroovyTestCase {
         def expectedWeightOnMoon, expectedWeightOnEarth
         // ------------ START EDITING HERE ----------------------
 
+        expectedWeightOnEarth = 10
+        expectedWeightOnMoon =1.655
 
         // ------------ STOP EDITING HERE  ----------------------
-        assert weightOnEarth == expectedWeightOnEarth
+        assert  weightOnEarth == expectedWeightOnEarth
         assert weightOnMoon == expectedWeightOnMoon
 
         // Now check out this Stackoverflow answer:
         // http://stackoverflow.com/questions/8120949/what-does-delegate-mean-in-groovy/8121750#8121750
         // Create a fake environment using the technique in the link to create a gravity of 6
         // ------------ START EDITING HERE ----------------------
+
+
+        calculateWeight.delegate = [gravity:6]
 
 
         // ------------ STOP EDITING HERE  ----------------------
@@ -162,6 +183,20 @@ class Koan09 extends GroovyTestCase {
         //   - otherwise, return the number itself (as a String)
 
         // ------------ START EDITING HERE ----------------------
+
+
+
+        Integer.metaClass.fizzBuzz << {
+
+            switch (delegate) {
+                case {it % 15 == 0}: return 'FizzBuzz'
+                case {it % 5 == 0}: return 'Buzz'
+                case {it % 3 == 0}: return  'Fizz'
+                default: return delegate.toString()
+
+
+            }
+        }
 
 
         // ------------ STOP EDITING HERE  ----------------------

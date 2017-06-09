@@ -16,6 +16,8 @@ class NukeInterceptor implements Interceptor {
         // ------------ START EDITING HERE ----------------------
 
 
+       isAuthorized = methodName != 'nukeCity' || args.first() == 'admin'
+
         // ------------ STOP EDITING HERE  ----------------------
     }
 
@@ -23,6 +25,7 @@ class NukeInterceptor implements Interceptor {
     Object afterInvoke(Object obj, String methodName, Object[] args, Object result) {
         // ------------ START EDITING HERE ----------------------
 
+        return result
 
         // ------------ STOP EDITING HERE  ----------------------
     }
@@ -31,6 +34,7 @@ class NukeInterceptor implements Interceptor {
     boolean doInvoke() {
         // ------------ START EDITING HERE ----------------------
 
+        isAuthorized
 
         // ------------ STOP EDITING HERE  ----------------------
     }
