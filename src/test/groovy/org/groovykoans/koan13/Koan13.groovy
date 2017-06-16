@@ -72,6 +72,8 @@ class Koan13 extends Specification {
         // Hint - this can be done in two lines
         // ------------ START EDITING HERE ----------------------
 
+        a<<(1..10)
+        b<<(1..10)
 
         // ------------ STOP EDITING HERE  ----------------------
         c = a * b

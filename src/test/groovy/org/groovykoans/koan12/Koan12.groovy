@@ -69,8 +69,8 @@ class Koan12 extends GroovyTestCase {
         // ------------ START EDITING HERE ----------------------
 
         Worker workerica = { a -> a+10 } as Worker
+        StaticFactory.metaClass.static.getWorker = {workerica}
 
-                                                                        
 
         // ------------ STOP EDITING HERE  ----------------------
        new StaticFactory(numbers: 1..10).work()
