@@ -6,6 +6,9 @@
  */
 
 package org.groovykoans.koan12
+
+import org.omg.PortableInterceptor.NON_EXISTENT
+
 /**
  * Koans12 - Built-in testing support in Groovy
  *
@@ -27,13 +30,13 @@ class Koan12 extends GroovyTestCase {
         // Use shouldFail() to make this unit test pass. Try to be specific about the exception type.
 
         // ------------ START EDITING HERE ----------------------
-
+        shouldFail {
 
             // ------------ STOP EDITING HERE  ----------------------
             Integer.nonExistentMethod()
             // ------------ START EDITING HERE ----------------------
 
-
+        }
         // ------------ STOP EDITING HERE  ----------------------
 
     }
@@ -49,6 +52,9 @@ class Koan12 extends GroovyTestCase {
         long startTime = System.currentTimeMillis()
         // ------------ START EDITING HERE ----------------------
 
+        def fastWorker = new Expando()
+        fastWorker.work = { a -> a+10 }
+        factory.worker = fastWorker
 
         // ------------ STOP EDITING HERE  ----------------------
         factory.work()
@@ -62,6 +68,9 @@ class Koan12 extends GroovyTestCase {
         startTime = System.currentTimeMillis()
         // ------------ START EDITING HERE ----------------------
 
+        Worker workerica = { a -> a+10 } as Worker
+
+                                                                        
 
         // ------------ STOP EDITING HERE  ----------------------
        new StaticFactory(numbers: 1..10).work()

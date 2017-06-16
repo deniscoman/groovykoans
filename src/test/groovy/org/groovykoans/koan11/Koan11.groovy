@@ -7,7 +7,9 @@
 
 package org.groovykoans.koan11
 
+import groovy.sql.DataSet
 import groovy.sql.Sql
+import org.groovykoans.koan08.Person
 
 import java.sql.Connection
 import java.sql.DriverManager
@@ -55,6 +57,8 @@ class Koan11 extends GroovyTestCase {
             db.execute(CREATE_STMT)
             // ------------ START EDITING HERE ----------------------
 
+            db.execute "INSERT INTO Person (FIRSTNAME, LASTNAME) VALUES ('Jack', 'Dawson')"
+
 
             // ------------ STOP EDITING HERE  ----------------------
             assert db.firstRow('select count(*) c from Person').c == 1
@@ -70,6 +74,9 @@ class Koan11 extends GroovyTestCase {
             // Add all the people from cast.txt into the table we just created.
             // ------------ START EDITING HERE ----------------------
 
+            new File("src/test/groovy/org/groovykoans/koan11/cast.txt").splitEachLine("/n") {fields ->
+                db.execute "INSERT INTO Person (FIRSTNAME, LASTNAME) VALUES ('${fields[1]}', '${fields[2]}')"
+            }
 
             // ------------ STOP EDITING HERE  ----------------------
             assert db.firstRow('select count(*) c from Person').c == 23
@@ -77,6 +84,25 @@ class Koan11 extends GroovyTestCase {
             // Now do the same with an xml source from cast2.xml (add the actor names):
             // ------------ START EDITING HERE ----------------------
 
+            def prefix = 'src/test/groovy/org/groovykoans/koan11'
+
+            def file1 = new File("$prefix/cast2.xml")
+
+            def xml = new XmlSlurper().parse(file1)
+
+
+
+            xml.character.each {def insertion = it.@actor.toString().split()
+                db.execute "INSERT INTO Person (FIRSTNAME, LASTNAME) VALUES (?, ?)", insertion[0] ,insertion[1]
+
+
+            }
+
+
+
+        //    xml.character.@actor.findAll{ it }.toString().findAll(/([a-zA-Z])+ ([a-zA-Z])+/) {
+        //        db.execute "INSERT INTO Person (FIRSTNAME, LASTNAME) VALUES ('${it[1]}', '${it[2]}')"
+        //    }
 
             // ------------ STOP EDITING HERE  ----------------------
             assert db.firstRow('select count(*) c from Person').c == 39
@@ -86,6 +112,7 @@ class Koan11 extends GroovyTestCase {
             def person = db.dataSet('PERSON')
             // ------------ START EDITING HERE ----------------------
 
+            person.add(['FIRSTNAME':'Denis','LASTNAME':'Coman'] )
 
             // ------------ STOP EDITING HERE  ----------------------
             assert db.firstRow('select count(*) c from Person').c == 40
@@ -105,6 +132,13 @@ class Koan11 extends GroovyTestCase {
             // ------------ START EDITING HERE ----------------------
 
 
+
+           def rose = db.firstRow('select LASTNAME from Person where FIRSTNAME = :firstName', [firstName:'Rose'])
+           lastNameRose = rose.lastname
+
+
+
+
             // ------------ STOP EDITING HERE  ----------------------
             assert lastNameRose == 'DeWitt'
 
@@ -113,7 +147,10 @@ class Koan11 extends GroovyTestCase {
             def eCount = 0
             // ------------ START EDITING HERE ----------------------
 
+            db.eachRow('SELECT LASTNAME FROM PERSON') { row ->
+                eCount += row.lastname.count('e')
 
+               }
             // ------------ STOP EDITING HERE  ----------------------
             assert eCount == 2
         }
@@ -129,6 +166,9 @@ class Koan11 extends GroovyTestCase {
             // Use eachRow() to change all the first names that contain the letter 'a' (lowercase) into 'Alf'.
             // ------------ START EDITING HERE ----------------------
 
+             db.eachRow("SELECT * FROM PERSON  WHERE firstname LIKE '%a%'") { row ->
+                 row.firstname = 'Alf'
+             }
 
             // ------------ STOP EDITING HERE  ----------------------
             assert db.firstRow("select count(*) c from PERSON where FIRSTNAME = 'Alf'").c == 2

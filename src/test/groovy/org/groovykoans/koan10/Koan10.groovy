@@ -35,6 +35,20 @@ class Koan10 extends GroovyTestCase {
         def movieCount
         // ------------ START EDITING HERE ----------------------
 
+        movieCount=0
+
+        def prefix = 'src/test/groovy/org/groovykoans/koan10/'
+
+        def file1 = new File("$prefix/movies.xml")
+
+        def xml = new XmlSlurper().parse(file1)
+
+        xml.toString().findAll(/[0-9]+/){movieCount+=1}
+
+       // xml.movie.findAll{p -> p.year.toInteger()>1900}.each {p -> println "$p.title"}
+
+
+
 
         // ------------ STOP EDITING HERE  ----------------------
         assert movieCount == 7
@@ -44,6 +58,9 @@ class Koan10 extends GroovyTestCase {
         List<String> moviesWithThe = []
         // ------------ START EDITING HERE ----------------------
 
+        xml.movie.findAll{p -> p.title.toString() ==~ /(The [a-zA-Z]+)|([a-zA-Z]+ the [a-zA-Z]+)/}.each {p ->moviesWithThe.add(p.title.toString())} //??
+
+
 
         // ------------ STOP EDITING HERE  ----------------------
         assert moviesWithThe.containsAll(['Conan the Barbarian', 'The Expendables', 'The Terminator'])
@@ -52,6 +69,12 @@ class Koan10 extends GroovyTestCase {
         def movieIdsGreaterThan5
         // ------------ START EDITING HERE ----------------------
 
+        movieIdsGreaterThan5=0
+
+
+        xml.movie.findAll{it.@id.toInteger() >5}.each {movieIdsGreaterThan5 ++}
+
+        println movieIdsGreaterThan5
 
         // ------------ STOP EDITING HERE  ----------------------
         assert movieIdsGreaterThan5 == 2
@@ -65,6 +88,17 @@ class Koan10 extends GroovyTestCase {
 
         List<String> sortedList = []
         // ------------ START EDITING HERE ----------------------
+
+        def prefix = 'src/test/groovy/org/groovykoans/koan10/'
+
+        def file1 = new File("$prefix/movies.xml")
+
+        def xml = new XmlSlurper().parse(file1)
+
+        println xml.movie.title.toString
+
+
+        sortedList = xml.movie.sort{a,b ->( a.year.toInteger()<=>b.year.toInteger() ?: a.title.toString() <=> b.title.toString() ) }.title
 
 
         // ------------ STOP EDITING HERE  ----------------------
@@ -91,9 +125,17 @@ class Koan10 extends GroovyTestCase {
         def html
         // ------------ START EDITING HERE ----------------------
 
+        html = new StringWriter()
 
+        def writer = new MarkupBuilder(html)
+
+        writer.html() {
+            body() {
+                h1('title')
+            }
+        }
         // ------------ STOP EDITING HERE  ----------------------
-        assert formatXml(html) == formatXml("<html><body><h1>title</h1></body></html>")
+        assert formatXml(html.toString()) == formatXml("<html><body><h1>title</h1></body></html>")
     }
 
     void test04_XmlMarkupBuilder2() {
@@ -107,6 +149,7 @@ class Koan10 extends GroovyTestCase {
 
         String convertedXml
         // ------------ START EDITING HERE ----------------------
+
 
 
         // ------------ STOP EDITING HERE  ----------------------
@@ -142,6 +185,12 @@ class Koan10 extends GroovyTestCase {
         // http://ant.apache.org/manual/Tasks/copy.html
         def baseDir = 'src/test/groovy/org/groovykoans/koan10'
         // ------------ START EDITING HERE ----------------------
+
+        def ant = new AntBuilder()
+
+        ant.sequential{
+            copy(file: "$baseDir/movies.xml", tofile: "$baseDir/movies_copy.xml")
+        }
 
 
         // ------------ STOP EDITING HERE  ----------------------
